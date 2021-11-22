@@ -2,10 +2,10 @@ const router = require('express').Router();
 
 //this has to be changed depending on the routes I want to make
 
-const userRoutes = require('./userRoutes');
-const projectRoutes = require('./projectRoutes');
+const dashboard = require('./dashboard');
+const user = require('./userRoutes');
 
-router.use('/', homeRoutes);
-router.use('/api', apiRoutes)
+router.use('/dashboard', dashboard);
+router.use('/users', user);
 
 module.export = router;
