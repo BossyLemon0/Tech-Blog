@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
-const handlebars = require('express-handlebars');
+const xpresHbars = require('express-handlebars');
 const routes = require('./controller');
+const handlebars = xpresHbars.create({});
 
 const path = require('path');
 
@@ -20,6 +21,7 @@ const info = {
 };
 
 app.use(session(info));
+
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
