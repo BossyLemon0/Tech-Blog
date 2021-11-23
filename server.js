@@ -4,6 +4,9 @@ const xpresHbars = require('express-handlebars');
 const routes = require('./controller');
 const handlebars = xpresHbars.create({});
 
+const sequelize = require('./config/config');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 const path = require('path');
 
 
@@ -22,17 +25,15 @@ const info = {
 
 app.use(session(info));
 
-
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
 sequelize.sync({force:false}).then(()=>{
-    app.listen(PORT, ()=> 
-    console.log(`Now listening at port http://localhost:${PORT}`))
+    app.listen(PORT, () => console.log(`Now listening at port http://localhost:${PORT}`))
 })

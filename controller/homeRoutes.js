@@ -1,9 +1,7 @@
-const { response } = require('express');
 
 const router = require('express').Router();
 
 //get routes that will grab data and render it onto the page.
-
 router.get('/', async(req,res)=>{
     try{
         res.render('home');
