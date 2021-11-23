@@ -7,7 +7,32 @@
     <link rel="stylesheet" href="/public/style.css">
     <title>Tech Blog</title>
 </head>
+
 <body>
-    {{{body}}}
+    <nav>
+        <div class="nav_btns">
+            <div class="btn">Home</div>
+            <div class="btn">Dashboard</div>
+            {{#if logged_in}}
+            <div class="btn logout_btn">Logout</div>
+            {{else}}
+            <div class="btn login_btn">Login</div>
+            {{/if}}
+        </div>
+        <div class="nav_title">
+            {{#if onDashbaord}}
+            <div>
+                Tech Blog
+            </div>
+            {{#else}}
+            <div>
+                Your Dashboard
+            </div>
+            {{/if}}
+        </div>
+    </nav>
+    <main>
+        {{{body}}}
+    </main>
 </body>
 </html>
