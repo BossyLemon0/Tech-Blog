@@ -3,8 +3,8 @@ const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
 
 class Users extends Model {
-    checkPassword(loginPw) {
-      return bcrypt.compareSync(loginPw, this.password);
+    checkPassword(password) {
+      return bcrypt.compareSync(password, this.password);
     }
   }
 
@@ -30,7 +30,7 @@ class Users extends Model {
       {
         // this hook hashes the password before it's put into the database.
         //I'm leaving out the before update hook that does the same because from 
-        //my understanding is that before update incenuates that I will be updating the password
+        //my understanding the before update incinuates that I will be updating the password
         //and for now I won't have a feauture to change the password if you forget it.
         hooks:{
           beforeCreate: async (newUser) => {
