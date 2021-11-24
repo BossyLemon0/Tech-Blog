@@ -28,6 +28,16 @@ class Users extends Model {
           },
       },
       {
+        // this hook hashes the password before it's put into the database.
+        //I'm leaving out the before update hook that does the same because from 
+        //my understanding is that before update incenuates that I will be updating the password
+        //and for now I won't have a feauture to change the password if you forget it.
+        hooks:{
+          beforeCreate: async (newUser) => {
+            newUser.password = await bycrypt.hash(newUser.password, 10);
+            return newUser
+          }
+        },
       sequelize,
       timestamps:false,
       freezeTableName:true,
