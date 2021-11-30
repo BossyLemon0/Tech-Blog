@@ -17,7 +17,7 @@ router.post('/', async (req,res) => {
         })
     }
     catch(err){
-        res.status(400).json(err)
+        res.status(500).json(err)
     }
 })
 router.post('/login', async (req,res) =>{
@@ -44,7 +44,7 @@ router.post('/login', async (req,res) =>{
 
     }
     catch(err){
-        res.status(400).json(err)
+        res.status(500).json(err)
     }
 })
 router.post('logout', async (req,res) =>{
@@ -60,7 +60,7 @@ router.post('logout', async (req,res) =>{
           }
     }
     catch(err){
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 })
 

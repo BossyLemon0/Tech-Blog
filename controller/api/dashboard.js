@@ -13,7 +13,7 @@ router.post('/',authentication, async (req, res) => {
         res.status(200).json(newPost)
     }
     catch(err){
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 });
 
@@ -32,7 +32,7 @@ router.put('/update/:id',authentication, async (req, res) => {
         res.status(200).json(updatePost);
     }
     catch(err){
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 });
 
@@ -46,7 +46,7 @@ router.delete('/delete/:id',authentication, async (req, res) => {
         res.status(200).json(deletePost);
     }
     catch(err){
-        res.status(400).json(err);
+        res.status(500).json(err);
     }
 });
 

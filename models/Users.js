@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/config');
 const bcrypt = require('bcrypt');
 
 class Users extends Model {
@@ -32,12 +32,14 @@ class Users extends Model {
         //I'm leaving out the before update hook that does the same because from 
         //my understanding the before update incinuates that I will be updating the password
         //and for now I won't have a feauture to change the password if you forget it.
+
         hooks:{
           beforeCreate: async (newUser) => {
-            newUser.password = await bycrypt.hash(newUser.password, 10);
+            newUser.password = await bcrypt.hash(newUser.password, 10);
             return newUser
           }
         },
+        
       sequelize,
       timestamps:false,
       freezeTableName:true,
@@ -45,5 +47,7 @@ class Users extends Model {
       modelName: 'user',
       }
   );
+
+  console.log('working')
 
   module.exports = Users;

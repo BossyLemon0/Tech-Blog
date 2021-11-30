@@ -1,18 +1,15 @@
-const { Posts, Users } = require('../models');
-const { findByPk } = require('../models/Users');
-
 const router = require('express').Router();
+const { Posts, Users } = require('../models');
+
+
 
 //get routes that will grab data and render it onto the page.
 router.get('/', async(req,res)=>{
     try{
-        res.render('home');
-
         if (req.session.onDashbaord) {
-            req.session.destroy(() => {
-              res.status(204).end();
-            });
+            req.session.onDashbaord = false;
           } 
+          res.render('home');
     }
     catch (err){
         res.status(500).json(err);
@@ -34,7 +31,12 @@ router.get('/login', async(req,res)=>{
 
 router.get('/signup', async(req,res)=>{
     try{
-        res.render('signup');
+
+        if (req.session.logged_in) {
+            res.redirect('/');
+            return;
+          }
+          res.render('signup');
     }
     catch (err){
         res.status(500).json(err);
@@ -50,16 +52,15 @@ router.get('/dashboard/:id', async(req,res)=>{
                 },
               ]
             });
-
-        // req.session.save(() => {
-        //     req.session.onDashbaord = true;
-        //     res.status(200).json(dashBoard)
-        // });
+            console.log(dashBoard)
+        req.session.save(() => {
+            req.session.onDashbaord = true;
+            res.status(200).json(dashBoard)
+        });
         const dashBoardData = dashBoard.get({ plain: true });
 
         res.render('dashboard', {
             dashBoardData,
-            logged_in: true,
             onDashbaord: true
           });
     }
@@ -79,11 +80,18 @@ router.get('/createPost', async(req,res)=>{
     }
 });
 
-router.get('/comment', async(req,res)=>{
+router.get('/comment/:id', async(req,res)=>{
     try{
-        res.render('comment');
+        const Post = await Posts.findOne(
+            {where: {id: req.params.id }},
+            );
+        const commentData = Post.get({ plain: true });
+
+        res.render('comment',{
+        commentData,
+    });
     }
-    catch (err){
+    catch(err){
         res.status(500).json(err);
     }
 });
